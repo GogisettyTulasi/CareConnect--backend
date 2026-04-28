@@ -45,28 +45,42 @@ public class SecurityConfig {
             s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login")
-                    .permitAll()
+                auth
+                    // ✅ PUBLIC ENDPOINTS
                     .requestMatchers(
+                        "/",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml")
                     .permitAll()
+
+                    .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login")
+                    .permitAll()
+
+                    // ✅ EVERYTHING ELSE REQUIRES AUTH
                     .anyRequest()
                     .authenticated())
         .addFilterBefore(
             jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
     return http.build();
   }
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration c = new CorsConfiguration();
-    c.setAllowedOrigins(List.of("http://localhost:5173"));
+
+    // ✅ allow BOTH local frontend + deployed frontend
+    c.setAllowedOrigins(List.of(
+        "http://localhost:5173",
+        "https://careconnect-backend-production.up.railway.app"
+    ));
+
     c.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     c.setAllowedHeaders(List.of("*"));
     c.setAllowCredentials(true);
+
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", c);
     return source;
