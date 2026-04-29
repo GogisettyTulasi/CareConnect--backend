@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://careconnect-eight-chi.vercel.app")
 public class UserController {
 
     private final UserRepository userRepository;
