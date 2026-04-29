@@ -53,7 +53,7 @@ public class ItemController {
   }
 
   // ================= UPDATE =================
-  @PatchMapping("/{id}")
+  @PutMapping("/{id}")
   public ItemDto update(
       @PathVariable Long id,
       @RequestBody ItemUpdateDto body,
