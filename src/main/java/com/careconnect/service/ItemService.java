@@ -14,14 +14,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@RequiredArgsConstructor
+@Service 
 public class ItemService {
 
   private final ItemRepository itemRepository;
   private final UserRepository userRepository;
   private final EmailService emailService;
 
+  public ItemService(ItemRepository itemRepository, UserRepository userRepository, EmailService emailService) {
+	    this.itemRepository = itemRepository;
+	    this.userRepository = userRepository;
+	    this.emailService = emailService;
+	}
   @Transactional
   public ItemDto create(ItemCreateDto dto, User user) {
     Item item = new Item();

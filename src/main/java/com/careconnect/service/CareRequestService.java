@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
+
 public class CareRequestService {
 
   private final DonationRequestRepository donationRequestRepository;
@@ -17,6 +17,15 @@ public class CareRequestService {
   private final UserRepository userRepository;
   private final EmailService emailService;
 
+  public CareRequestService(DonationRequestRepository donationRequestRepository,
+          ItemRepository itemRepository,
+          UserRepository userRepository,
+          EmailService emailService) {
+this.donationRequestRepository = donationRequestRepository;
+this.itemRepository = itemRepository;
+this.userRepository = userRepository;
+this.emailService = emailService;
+}
   // ================= CREATE =================
   @Transactional
   public RequestDto create(RequestCreateDto dto, User user) {
