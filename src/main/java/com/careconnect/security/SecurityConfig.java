@@ -73,10 +73,7 @@ public class SecurityConfig {
     CorsConfiguration c = new CorsConfiguration();
 
     // ✅ allow BOTH local frontend + deployed frontend
-    c.setAllowedOriginPatterns(List.of(
-    	    "http://localhost:5173",
-    	    "https://careconnect-eight-chi.vercel.app"
-    	));
+    c.setAllowedOriginPatterns(List.of("*"));
 
     c.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     c.setAllowedHeaders(List.of("*"));
