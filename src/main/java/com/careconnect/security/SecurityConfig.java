@@ -54,7 +54,8 @@ public class SecurityConfig {
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml")
                     .permitAll()
-
+                    
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login")
                     .permitAll()
 
@@ -72,10 +73,10 @@ public class SecurityConfig {
     CorsConfiguration c = new CorsConfiguration();
 
     // ✅ allow BOTH local frontend + deployed frontend
-    c.setAllowedOrigins(List.of(
-        "http://localhost:5173",
-        "https://careconnect-backend-production.up.railway.app"
-    ));
+    c.setAllowedOriginPatterns(List.of(
+    	    "http://localhost:5173",
+    	    "https://careconnect-eight-chi.vercel.app"
+    	));
 
     c.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
     c.setAllowedHeaders(List.of("*"));
