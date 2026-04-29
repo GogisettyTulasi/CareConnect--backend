@@ -3,6 +3,7 @@ package com.careconnect.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class EmailService {
 
   private final JavaMailSender mailSender;
 
+  @Async // ✅ runs email in background (non-blocking)
   public void sendEmail(String to, String subject, String body) {
 
     try {
@@ -22,10 +24,10 @@ public class EmailService {
 
       mailSender.send(message);
 
-      System.out.println("Email sent to: " + to);
+      System.out.println("✅ Email sent to: " + to);
 
     } catch (Exception e) {
-      System.out.println("Email failed: " + e.getMessage());
+      System.out.println("❌ Email failed: " + e.getMessage());
     }
   }
 }
